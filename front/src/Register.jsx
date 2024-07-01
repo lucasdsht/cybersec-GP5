@@ -30,7 +30,7 @@ const Register = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('https://a29b-79-174-199-110.ngrok-free.app/api/register/', {
+        const response = await axios.post('http://localhost:3000/api/register/', {
           email: values.email,
           password: values.password,
           username: values.username

@@ -17,8 +17,8 @@ const ArticleForm = ({ article, onSave }) => {
     onSubmit: async (values) => {
       try {
         const response = article
-          ? await axios.put(`https://a29b-79-174-199-110.ngrok-free.app/api/post/${article.id}`, values)
-          : await axios.post('https://a29b-79-174-199-110.ngrok-free.app/api/post/', values);
+          ? await axios.put(`http://localhost:3000/api/post/${article.id}`, values)
+          : await axios.post('http://localhost:3000/api/post/', values);
         onSave(response.data);
       } catch (error) {
         console.error('Error saving article:', error);
