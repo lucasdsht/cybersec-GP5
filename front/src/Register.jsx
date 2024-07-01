@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Register.css';
 
 const Register = () => {
@@ -36,7 +37,7 @@ const Register = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Nom  d utilisateur</label>
         <input
           id="username"
           name="username"
@@ -50,7 +51,7 @@ const Register = () => {
         ) : null}
       </div>
       <div>
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">Adresse Email</label>
         <input
           id="email"
           name="email"
@@ -64,7 +65,7 @@ const Register = () => {
         ) : null}
       </div>
       <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Mot de passe</label>
         <input
           id="password"
           name="password"
@@ -78,7 +79,7 @@ const Register = () => {
         ) : null}
       </div>
       <div>
-        <label htmlFor="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">Confirmez le mot de passe</label>
         <input
           id="confirmPassword"
           name="confirmPassword"
@@ -91,7 +92,8 @@ const Register = () => {
           <div>{formik.errors.confirmPassword}</div>
         ) : null}
       </div>
-      <button type="submit">Register</button>
+      <button type="submit">S inscrire</button>
+      <p>Vous avez déjà un compte ? <Link to="/login">Connectez-vous</Link></p>
     </form>
   );
 };
