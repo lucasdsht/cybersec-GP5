@@ -1,23 +1,32 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import './Login.css';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email address').required('Required'),
-      password: Yup.string().required('Required'),
+      email: Yup.string().email('Adresse Email invalide').required('Requis'),
+      password: Yup.string().required('Requis'),
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('/api/login', values);
+        const response = await axios.post('https://a29b-79-174-199-110.ngrok-free.app/api/login/', {
+          email: values.email,
+          password: values.password,
+        });
         console.log('User logged in:', response.data);
+        login();
+        navigate('/articles');
       } catch (error) {
         console.error('Login error:', error);
       }
@@ -27,7 +36,7 @@ const Login = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div>
-        <label htmlFor="email">Email Address</label>
+        <label htmlFor="email">Adresse Email</label>
         <input
           id="email"
           name="email"
@@ -41,7 +50,7 @@ const Login = () => {
         ) : null}
       </div>
       <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">Mot de passe</label>
         <input
           id="password"
           name="password"
@@ -54,8 +63,8 @@ const Login = () => {
           <div>{formik.errors.password}</div>
         ) : null}
       </div>
-      <button type="submit">Login</button>
-      <p>Pas de compte? <Link to="/register">Register</Link></p>
+      <button type="submit">Connexion</button>
+      <p>Vous n avez pas de compte ? <Link to="/register">Inscrivez-vous</Link></p>
     </form>
   );
 };

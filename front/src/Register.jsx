@@ -1,10 +1,14 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import './Register.css';
 
 const Register = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -18,7 +22,7 @@ const Register = () => {
         .required('Requis'),
       email: Yup.string().email('Adresse Email invalide').required('Requis'),
       password: Yup.string()
-        .min(8, 'Dois contenir au moins 8 caractères')
+        .min(8, 'Doit contenir au moins 8 caractères')
         .required('Requis'),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Mot de passe non identique')
@@ -26,8 +30,14 @@ const Register = () => {
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('/api/register', values);
+        const response = await axios.post('https://a29b-79-174-199-110.ngrok-free.app/api/register/', {
+          email: values.email,
+          password: values.password,
+          username: values.username
+        });
         console.log('User registered:', response.data);
+        login();
+        navigate('/articles');
       } catch (error) {
         console.error('Registration error:', error);
       }
@@ -37,7 +47,7 @@ const Register = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div>
-        <label htmlFor="username">Nom  d utilisateur</label>
+        <label htmlFor="username">Nom d'utilisateur</label>
         <input
           id="username"
           name="username"
