@@ -10,16 +10,16 @@ pgadmin:
 	open http://localhost:5050
 
 dev:
-	make up & pnpm dev
+	make up & npm run dev
 
 test:
-	pnpm test
+	npm run test
 
 build:
-	pnpm build
+	npm run build
 
 start:
-	make build & pnpm start
+	make build & npm run start
 
 migrate:
 	npx prisma migrate dev --name $(name)

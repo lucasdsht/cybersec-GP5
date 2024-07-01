@@ -10,7 +10,7 @@ const ArticlesList = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const response = await axios.get('https://a29b-79-174-199-110.ngrok-free.app/api/posts/');
+        const response = await axios.get('http://localhost:3000/api/posts/');
         setArticles(response.data);
       } catch (error) {
         console.error('Error fetching articles:', error);
@@ -21,7 +21,7 @@ const ArticlesList = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://a29b-79-174-199-110.ngrok-free.app/api/post/${id}`);
+      await axios.delete(`http://localhost:3000/api/post/${id}`);
       setArticles(articles.filter(article => article.id !== id));
     } catch (error) {
       console.error('Error deleting article:', error);
